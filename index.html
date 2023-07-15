@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Matching Game</title>
+  </head>
+  <body>
+    <div id="start-screen">
+      <h1>Matching Game</h1>
+      <button id="start-button">Start</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <div id="grid"></div>
+      <div id="info">
+        <div id="timer"></div>
+        <div id="score-text"></div>
+        <button id="reset-button">Reset</button>
+        <button id="restart-button">Restart</button>
+        <button id="pause-button">Pause</button>
+      </div>
+    </div>
+
+    <div id="end-screen" class="hidden">
+      <div id="score-text"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+/* Add your CSS styling here */
+#game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#start-screen,
+#end-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 100px;
+  height: 100px;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
+}
+
+.card.flipping {
+  transform: rotateY(180deg);
+}
+
+.card.flipped {
+  transform: rotateY(360deg);
+}
+
+#timer {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.card.matched {
+  background-color: green;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+}
