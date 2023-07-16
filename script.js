@@ -86,39 +86,47 @@ class MatchGrid {
     )
       return;
 
-    card.classList.add("flipping");
-    setTimeout(() => {
-      card.classList.remove("flipping");
-      card.classList.add("flipped");
-      card.textContent = card.dataset.number;
-      this.flippedCards.push(card);
+    const flipAnimation = anime({
+      targets: card,
+      rotateY: {
+        value: "+=360",
+        easing: "easeInOutSine",
+      },
+      duration: 400,
+      complete: () => {
+        card.classList.toggle("flipped");
+        card.textContent = card.dataset.number;
+        this.flippedCards.push(card);
 
-      if (this.flippedCards.length === 2) {
-        const [card1, card2] = this.flippedCards;
-        const number1 = card1.dataset.number;
-        const number2 = card2.dataset.number;
+        if (this.flippedCards.length === 2) {
+          const [card1, card2] = this.flippedCards;
+          const number1 = card1.dataset.number;
+          const number2 = card2.dataset.number;
 
-        if (number1 !== number2) {
-          setTimeout(() => {
-            card1.classList.remove("flipped");
-            card2.classList.remove("flipped");
-            card1.textContent = "?";
-            card2.textContent = "?";
+          if (number1 !== number2) {
+            setTimeout(() => {
+              card1.classList.remove("flipped");
+              card2.classList.remove("flipped");
+              card1.textContent = "?";
+              card2.textContent = "?";
+              this.flippedCards = [];
+              this.moves++;
+              this.updatedScore();
+            }, 1000);
+          } else {
+            card1.classList.add("matched");
+            card2.classList.add("matched");
             this.flippedCards = [];
-            this.moves++;
-            this.updatedScore();
-          }, 1000);
-        } else {
-          card1.classList.add("matched");
-          card2.classList.add("matched");
-          this.flippedCards = [];
-          this.score += 2;
-          if (this.score === this.cols * this.rows) {
-            this.endGame();
+            this.score += 2;
+            if (this.score === this.cols * this.rows) {
+              this.endGame();
+            }
           }
         }
-      }
-    }, 200);
+      },
+    });
+
+    flipAnimation.play();
   }
 
   getCardNumber(card) {
