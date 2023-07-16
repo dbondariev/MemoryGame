@@ -20,11 +20,20 @@ class MatchGrid {
     this.restartButton = document.getElementById("restart-button");
 
     this.startButton = document.getElementById("start-button");
-    this.startButton.addEventListener("click", () => this.startGame());
+    this.startButton.addEventListener("click", () => {
+      this.startGame();
+      this.displayMessage("GOOD LUCK!!!");
+    });
 
-    this.resetButton.addEventListener("click", () => this.resetGame());
+    this.resetButton.addEventListener("click", () => {
+      this.resetGame();
+      this.displayMessage("GOOD LUCK!!!");
+    });
 
-    this.restartButton.addEventListener("click", () => this.restartGame());
+    this.restartButton.addEventListener("click", () => {
+      this.restartGame();
+      this.displayMessage("GOOD LUCK!!!");
+    });
 
     this.grid.addEventListener("mouseout", () => this.pauseGame());
     this.grid.addEventListener("mouseover", () => this.resumeGame());
@@ -179,6 +188,11 @@ class MatchGrid {
     this.moves = 0;
     this.updatedScore();
     clearInterval(this.timerId);
+
+    const winMessage = document.getElementById("win-message");
+    if (winMessage) {
+      winMessage.remove();
+    }
   }
 
   restartGame() {
@@ -194,7 +208,39 @@ class MatchGrid {
     clearInterval(this.timerId);
     document.getElementById("game-screen").classList.add("hidden");
     document.getElementById("end-screen").classList.remove("hidden");
-    this.scoreText.textContent = `Score: ${this.score}`;
+
+    const winMessage = document.getElementById("win-message");
+    const loseMessage = document.getElementById("lose-message");
+
+    if (winMessage) {
+      winMessage.remove();
+    }
+
+    if (loseMessage) {
+      loseMessage.remove();
+    }
+
+    const allCards = document.querySelectorAll(".card");
+    const unmatchedCards = Array.from(allCards).filter(
+      (card) => !card.classList.contains("matched")
+    );
+
+    if (unmatchedCards.length === 0) {
+      const winMessage = document.createElement("h1");
+      winMessage.id = "win-message";
+      winMessage.textContent = "YOU WIN!!!";
+      document.getElementById("end-screen").appendChild(winMessage);
+    } else if (this.remainingTime <= 0) {
+      const loseMessage = document.createElement("h1");
+      loseMessage.id = "lose-message";
+      loseMessage.textContent = "YOU LOSE!!!";
+      document.getElementById("end-screen").appendChild(loseMessage);
+    }
+  }
+
+  displayMessage(message) {
+    const messageContainer = document.getElementById("message-container");
+    messageContainer.innerHTML = `<h1>${message}</h1>`;
   }
 }
 
